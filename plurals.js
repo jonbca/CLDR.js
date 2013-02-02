@@ -1,5 +1,15 @@
-(function(globals) {
-
+/*globals exports: false, define: false*/
+(function (root, factory) {
+  if (typeof exports === 'object') {
+    module.exports = factory();
+  } else if (typeof define === 'function' && define.amd) {
+    define(function (){
+      return (root.CLDR = factory());
+    })
+  } else {
+    root.CLDR = factory()
+  }
+}(this, function () {
   // CLDR Pluralization Data
   // see http://unicode.org/repos/cldr-tmp/trunk/diff/supplemental/language_plural_rules.html
 
@@ -204,9 +214,7 @@
     }
   });
 
-  if ( globals.CLDR == null ) { globals.CLDR = {}; }
-
-  var CLDR = globals.CLDR;
+  var CLDR = {};
 
   // Look up the proper plural key for a count and language.
   // If CLDR.defaultLanguage is set, language is optional.
@@ -237,4 +245,5 @@
   CLDR.pluralForm.Many  = Many;
   CLDR.pluralForm.Other = Other;
 
-}(this));
+  return CLDR;
+}));
